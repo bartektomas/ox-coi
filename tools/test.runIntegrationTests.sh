@@ -94,9 +94,10 @@ do
             testResult=$?
         elif [[ ${target} = ${TARGET_IOS} ]]; then
             xcrun simctl uninstall ${deviceId} ${appId} >> ${LOG_FILE} 2>&1
-            sleep 5
+            sleep 10
             setupIos
-            flutter drive -d ${deviceId} --target=test_driver/setup/app.dart --driver=${test} >> ${LOG_FILE} 2>&1
+            sleep 10
+            flutter drive -d ${deviceId} --target=test_driver/setup/app.dart --driver=${test} --flavor development >> ${LOG_FILE} 2>&1
             testResult=$?
         fi
         if [[ ${testResult} -eq 0 ]]; then
