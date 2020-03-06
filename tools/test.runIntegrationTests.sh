@@ -11,6 +11,15 @@ TARGET_IOS="ios"
 LOG_FOLDER=test_driver/logs
 LOG_FILE=${LOG_FOLDER}/log.txt
 
+PLATFORM="ios"
+SIMULATOR="--simulator"
+if [[ ${target} = ${TARGET_ANDROID} ]]; then
+    PLATFORM="apk"
+    SIMULATOR=""
+fi
+BUILD_OPTIONS="--target=test_driver/setup/app.dart --debug ${SIMULATOR} --flavor development"
+
+
 # Variables
 success=0
 failed=0
@@ -85,21 +94,23 @@ fi
 touch ${LOG_FILE}
 
 # Execution
+
+flutter build ${PLATFORM} ${BUILD_OPTIONS}
+
+
 for test in test_driver/*
 do
     if [[ -f "$test" ]]; then
         echo "### Running test: $test"
-        if [[ ${target} = ${TARGET_ANDROID} ]]; then
-            flutter drive -d ${deviceId} --target=test_driver/setup/app.dart --driver=${test} --flavor development >> ${LOG_FILE} 2>&1
-            testResult=$?
-        elif [[ ${target} = ${TARGET_IOS} ]]; then
+
+        if [[ ${target} = ${TARGET_IOS} ]]; then
             xcrun simctl uninstall ${deviceId} ${appId} >> ${LOG_FILE} 2>&1
-            sleep 10
+            sleep 5
             setupIos
-            sleep 10
-            flutter drive -d ${deviceId} --target=test_driver/setup/app.dart --driver=${test} --flavor development >> ${LOG_FILE} 2>&1
-            testResult=$?
         fi
+            flutter drive -d ${deviceId} --no-build --target=test_driver/setup/app.dart --driver=${test} --flavor development >> ${LOG_FILE} 2>&1
+            testResult=$?
+
         if [[ ${testResult} -eq 0 ]]; then
             echo "  [OK] $test"
             ((success++))

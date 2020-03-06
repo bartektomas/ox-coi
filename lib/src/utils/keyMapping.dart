@@ -136,5 +136,5 @@ const keySettingsManuelFormValidatableTextFormFieldPasswordField = "keySettingsM
 const keySettingsManuelFormValidatableTextFormFieldImapServerField = "keySettingsManuelFormValidatableTextFormFieldImapServerField";
 const keySettingsManuelFormValidatableTextFormFieldSMTPServerField = "keySettingsManuelFormValidatableTextFormFieldSMTPServerField";
 
-const keyLoginLoginSignInText = "keyLoginLoginSignInText";
+const keyLoginLoginSignInText ="keyLoginLoginSignInText";
 const keyLoginRegisterText = "keyLoginRegisterText";
