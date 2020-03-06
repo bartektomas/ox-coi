@@ -123,6 +123,7 @@ void main() {
       await copyAndPasteMessage(driver, copy, paste);
     });
 
+
     test(': Delete message.', () async {
       await writeTextInChat(driver, textToDelete);
       await deleteMessage(textToDeleteFinder, driver);
