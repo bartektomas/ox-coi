@@ -80,7 +80,7 @@ void main() {
     final copy = 'Copy';
 
     final meContactFinder = find.text(meContact);
-    final textToDeleteFinder = find.text(textToDelete);
+    final textToDeleteFinder = find.byValueKey(textToDelete);
 
     test(': Get contacts and add new contacts.', () async {
       await driver.tap(contactsFinder);
@@ -101,14 +101,14 @@ void main() {
     });
 
     test(': Flagged messages from  meChat.', () async {
-      await flaggedMessage(driver, flagUnFlag, helloWorldFinder);
+      await flaggedMessage(driver, flagUnFlag, find.byValueKey(10));
       await driver.tap(pageBack);
       await navigateTo(driver, L.getKey(L.profile));
     });
 
     test(': UnFlagged messages.', () async {
       await unFlaggedMessage(driver, flagUnFlag, helloWorld);
-      await driver.waitForAbsent(helloWorldFinder);
+      await driver.waitForAbsent(find.byValueKey(helloWorld));
       await driver.tap(pageBack);
       await navigateTo(driver, L.getPluralKey(L.chatP));
       await driver.tap(meContactFinder);
@@ -116,7 +116,7 @@ void main() {
 
     test(': Forward message.', () async {
       await forwardMessageTo(driver, newTestName01, forward);
-      expect(await driver.getText(helloWorldFinder), helloWorld);
+      await driver.waitFor(find.byValueKey(helloWorld));
       await driver.tap(pageBack);
       await driver.tap(meContactFinder);
     });

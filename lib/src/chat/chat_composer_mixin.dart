@@ -242,9 +242,7 @@ mixin ChatComposer {
         onTapDown: onMicTapDown,
         child: Container(
           decoration: BoxDecoration(
-            color: isLocked || isStopped || type == ComposerModeType.compose
-                ? Colors.transparent
-                : CustomTheme.of(context).onSurface.barely(),
+            color: isLocked || isStopped || type == ComposerModeType.compose ? Colors.transparent : CustomTheme.of(context).onSurface.barely(),
             borderRadius: BorderRadius.all(Radius.circular(30.0)),
           ),
           child: Row(
@@ -260,6 +258,7 @@ mixin ChatComposer {
                   ),
                   onPressed: onRecordAudioLocked,
                 ),
+                key: Key(KeyChatComposerMixinVoiceComposeAdaptiveSuperellipse),
               ),
               Visibility(
                 visible: type == ComposerModeType.compose,
@@ -297,7 +296,7 @@ mixin ChatComposer {
                               iconColor: CustomTheme.of(context).white,
                             ),
                             onPressed: onAudioPlaying,
-                          ),
+                          ),key: Key(KeyChatComposerPlayComposeAdaptiveSuperellipse)
                         ),
                         Visibility(
                           visible: isPlaying,
@@ -308,7 +307,7 @@ mixin ChatComposer {
                               iconColor: CustomTheme.of(context).white,
                             ),
                             onPressed: onAudioPlayingStopped,
-                          ),
+                          ),key: Key(KeyChatComposerStopPlayComposeAdaptiveSuperellipse)
                         )
                       ],
                     )),

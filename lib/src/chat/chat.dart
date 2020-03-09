@@ -271,7 +271,7 @@ class _ChatState extends State<Chat> with ChatComposer, ChatCreateMixin, InviteM
   _clearAudioComposer() async {
     await Future.delayed(Duration(microseconds: 100));
     setState(() {
-      _dbPeakList.clear();
+      _dbPeakList?.clear();
       _composingAudioTimer = null;
       _isStopped = false;
       _isLocked = false;
@@ -382,7 +382,7 @@ class _ChatState extends State<Chat> with ChatComposer, ChatCreateMixin, InviteM
                                 iconColor: CustomTheme.of(context).white,
                               ),
                               onPressed: () => _isLocked ? _chatComposerBloc.add(StopAudioRecording(sendAudio: true)) : _onPrepareMessageSend(),
-                            ),
+                            ), key: Key(KeyChatOnSendTextIcon),
                           ),
                         ),
                       ),
@@ -945,6 +945,7 @@ class MessageList extends StatelessWidget {
                       nextMessageId = state.messageIds[index + 1];
                     }
                     bool hasDateMarker = state.dateMarkerIds.contains(messageId);
+                    print("########  MESSAGE ID IST ${messageId} ###########");
                     return MessageItem(
                       key:  ValueKey(messageId),
                       chatId: chatId,

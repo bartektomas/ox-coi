@@ -88,7 +88,7 @@ Future deleteContact(
   String newTestName,
 ) async {
   await driver.tap(find.text(newTestName));
-  await driver.scroll(find.byValueKey(keyContactDetailOpenChatProfileActionIcon), 0.0,-600, Duration(milliseconds: 500));
+  await driver.scroll(find.byValueKey(keyContactDetailOpenChatProfileActionIcon), 0.0, -600, Duration(milliseconds: 500));
   await driver.tap(find.byValueKey(keyContactDetailDeleteContactProfileActionIcon));
   await driver.tap(find.byValueKey(keyConfirmationDialogPositiveButton));
 }
@@ -115,9 +115,14 @@ Future chatTest(
 Future writeChatFromChat(FlutterDriver driver) async {
   await writeTextInChat(driver);
   // Enter audio now.
-  await driver.tap(find.byValueKey(KeyChatComposerMixinOnRecordAudioPressedIcon));
-  sleep(Duration(seconds: 1));
-  await driver.tap(find.byValueKey(KeyChatComposerMixinOnRecordAudioSendIcon));
+  await composeAudio(driver);
+  await driver.tap(find.byValueKey(KeyChatOnSendTextIcon));
+}
+
+Future composeAudio(FlutterDriver driver) async {
+  await performLongPress(driver, find.byValueKey(KeyChatComposerMixinVoiceComposeAdaptiveSuperellipse));
+  await driver.tap(find.byValueKey(KeyChatComposerPlayComposeAdaptiveSuperellipse));
+  sleep(Duration(seconds: 2));
 }
 
 Future writeTextInChat(FlutterDriver driver, [String text = ""]) async {
@@ -129,8 +134,12 @@ Future writeTextInChat(FlutterDriver driver, [String text = ""]) async {
     await driver.enterText(text);
   }
   await driver.tap(find.byValueKey(KeyChatComposerMixinOnSendTextIcon));
-  var actualNewMessage = await driver.getText(find.text(text));
-  expect(actualNewMessage, text);
+  final label = find.byValueKey(10);
+  await driver.tap(label);
+}
+
+Future<void> performLongPress(FlutterDriver driver, SerializableFinder target) async {
+  await driver.scroll(target, 0, 0, Duration(seconds: 4));
 }
 
 Future callTest(FlutterDriver driver) async {
@@ -158,28 +167,29 @@ Future blockOneContactFromContacts(FlutterDriver driver, String contactNameToBlo
 }
 
 Future unFlaggedMessage(FlutterDriver driver, String flagUnFlag, String messageToUnFlagged) async {
-  SerializableFinder messageToUnFlaggedFinder = find.text(messageToUnFlagged);
+  SerializableFinder messageToUnFlaggedFinder = find.byValueKey(10);
   await driver.tap(find.byValueKey(keyUserProfileFlagIconSource));
-  expect(await driver.getText(messageToUnFlaggedFinder), messageToUnFlagged);
-  await driver.scroll(messageToUnFlaggedFinder, 0, 0, scrollDuration);
+  await driver.waitFor(messageToUnFlaggedFinder);
+  await performLongPress(driver, messageToUnFlaggedFinder);
+
   await driver.tap(find.text(flagUnFlag));
 }
 
 Future flaggedMessage(FlutterDriver driver, String flagUnFlag, SerializableFinder messageToFlaggedFinder) async {
-  await driver.scroll(messageToFlaggedFinder, 0, 0, scrollDuration);
+  await performLongPress(driver, messageToFlaggedFinder);
   await driver.tap(find.text(flagUnFlag));
 }
 
 Future deleteMessage(SerializableFinder textToDeleteFinder, FlutterDriver driver) async {
   const deleteLocally = 'Delete locally';
-  await driver.scroll(textToDeleteFinder, 0, 0, scrollDuration);
+  await performLongPress(driver, textToDeleteFinder);
   await driver.tap(find.text(deleteLocally));
 }
 
 Future copyAndPasteMessage(FlutterDriver driver, String copy, String paste) async {
-  await driver.scroll(helloWorldFinder, 0, 0, scrollDuration);
+  await performLongPress(driver, find.byValueKey(helloWorld));
   await driver.tap(find.text(copy));
-  await driver.scroll(typeSomethingComposePlaceholderFinder, 0, 0, scrollDuration);
+  await performLongPress(driver, typeSomethingComposePlaceholderFinder);
   await driver.tap(find.text(paste));
   await driver.tap(find.byValueKey(KeyChatComposerMixinOnSendTextIcon));
   if (helloWorldFinder.serialize().length <= 2) {
@@ -188,7 +198,7 @@ Future copyAndPasteMessage(FlutterDriver driver, String copy, String paste) asyn
 }
 
 Future forwardMessageTo(FlutterDriver driver, String contactToForward, String forward) async {
-  await driver.scroll(helloWorldFinder, 0, 0, scrollDuration);
+  await performLongPress(driver, find.byValueKey(helloWorld));
   await driver.tap(find.text(forward));
   await driver.tap(find.text(contactToForward));
 }

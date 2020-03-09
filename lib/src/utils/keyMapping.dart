@@ -124,11 +124,14 @@ const keyChatAddGroupParticipantsCloseIcon = "keyChatAddGroupParticipantsCloseIc
 
 const KeyChatComposerMixinOnRecordAudioSendIcon = "KeyChatComposerMixinOnRecordAudioPressedSendIcon";
 const KeyChatComposerMixinOnSendTextIcon = "KeyChatcomposermixinOnSendTextIcon";
-const KeyChatComposerMixinOnRecordAudioPressedIcon = "KeyChatComposerMixinOnRecordAudioPressedIcon";
+const KeyChatComposerMixinVoiceComposeAdaptiveSuperellipse = "KeyChatComposerMixinOnRecordAudioPressedIcon";
+const KeyChatComposerStopPlayComposeAdaptiveSuperellipse= "KeyChatComposerStopPlayComposeAdaptiveSuperellipse";
+const KeyChatComposerPlayComposeAdaptiveSuperellipse= "KeyChatComposerPlayComposeAdaptiveSuperellipse";
 
 const keyChatProfileGroupDelete = "keyChatProfileGroupDelete";
 const keyChatIconButtonIconPhone = "keyChatIconButtonIconPhone";
 const keyChatNameText = "keyChatNameText";
+const KeyChatOnSendTextIcon = "KeyChatOnSendTextIcon";
 
 const keyUserAccountAdaptiveIconButtonIconCheck = "keyUserAccoutAdaptiveIconButtonIconCheck";
 

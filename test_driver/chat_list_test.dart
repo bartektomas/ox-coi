@@ -52,6 +52,8 @@ void main() {
   FlutterDriver driver;
   setUpAll(() async {
     driver = await setupAndGetDriver();
+    await driver.setSemantics(true);
+
   });
 
   tearDownAll(() async {
