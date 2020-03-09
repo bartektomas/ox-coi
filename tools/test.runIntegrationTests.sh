@@ -103,13 +103,17 @@ do
     if [[ -f "$test" ]]; then
         echo "### Running test: $test"
 
-        if [[ ${target} = ${TARGET_IOS} ]]; then
+         if [[ ${target} = ${TARGET_ANDROID} ]]; then
+            flutter drive -d ${deviceId} --target=test_driver/setup/app.dart --driver=${test} --flavor development >> ${LOG_FILE} 2>&1
+            testResult=$?
+
+        elif [[ ${target} = ${TARGET_IOS} ]]; then
             xcrun simctl uninstall ${deviceId} ${appId} >> ${LOG_FILE} 2>&1
             sleep 5
             setupIos
-        fi
             flutter drive -d ${deviceId} --no-build --target=test_driver/setup/app.dart --driver=${test} --flavor development >> ${LOG_FILE} 2>&1
             testResult=$?
+         fi
 
         if [[ ${testResult} -eq 0 ]]; then
             echo "  [OK] $test"
