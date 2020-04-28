@@ -62,7 +62,7 @@ import 'package:ox_coi/src/l10n/l.dart';
 import 'package:ox_coi/src/l10n/l10n.dart';
 import 'package:ox_coi/src/main/main_event_state.dart';
 import 'package:ox_coi/src/notifications/local_notification_manager.dart';
-import 'package:ox_coi/src/notifications/notification_manager.dart';
+import 'package:ox_coi/src/notifications/display_notification_manager.dart';
 import 'package:ox_coi/src/platform/app_information.dart';
 import 'package:ox_coi/src/platform/preferences.dart';
 import 'package:ox_coi/src/push/push_manager.dart';
@@ -71,7 +71,7 @@ import 'package:ox_coi/src/utils/url_preview_cache.dart';
 
 class MainBloc extends Bloc<MainEvent, MainState> {
   final _logger = Logger("main_bloc");
-  final _notificationManager = NotificationManager();
+  final _notificationManager = DisplayNotificationManager();
   final _pushManager = PushManager();
   final _localNotificationManager = LocalNotificationManager();
 
@@ -162,7 +162,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   }
 
   Future<void> setupManagers(BuildContext context) async {
-    _notificationManager.setup(context);
+    _notificationManager.setupAsync(context);
     _pushManager.setup(context);
     _localNotificationManager.setup();
   }
