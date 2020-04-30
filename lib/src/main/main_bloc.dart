@@ -178,7 +178,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   }
 
   Future<void> _initCore() async {
-    await core.init(dbName);
+    await core.setupAsync(dbName);
   }
 
   Future<void> _setupDefaultValues() async {
