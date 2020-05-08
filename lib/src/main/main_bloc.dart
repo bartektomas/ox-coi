@@ -164,7 +164,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   Future<void> setupManagers(BuildContext context) async {
     _notificationManager.setupAsync(context);
     _pushManager.setup(context);
-    _localNotificationManager.setup();
+    _localNotificationManager.setup(registerListeners: true);
   }
 
   Future<void> _applyCustomerConfig() async {
