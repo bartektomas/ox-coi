@@ -101,7 +101,7 @@ class MessageList extends StatelessWidget {
             return EmptyListInfo(
               infoText: L10n.get(L.chatNewPlaceholder),
               imagePath: "assets/images/empty_chat.png",
-            );;
+            );
           }
         } else {
           return StateInfo(showLoading: true);
